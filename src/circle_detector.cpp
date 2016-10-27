@@ -30,11 +30,11 @@ int main(int argc, char *argv[])
     int radius;
     
 
-// 	cv::Ptr<cv::ORB> orb_detector = new cv::ORB(MIN_NUM_FEATURES); //ORB point feature detector
-//     cv::vector<cv::KeyPoint> point_set; //set of point features
-//     cv::Ptr<cv::DescriptorExtractor> orb_descriptor; //ORB descriptor
-//     orb_descriptor = cv::DescriptorExtractor::create("ORB"); //init the descriptor
-//     cv::Mat descriptor_set; //set of descriptors, for each feature there is an associated descriptor 
+ 	cv::Ptr<cv::ORB> orb_detector = new cv::ORB(10); //ORB point feature detector
+     cv::vector<cv::KeyPoint> point_set; //set of point features
+     cv::Ptr<cv::DescriptorExtractor> orb_descriptor; //ORB descriptor
+     orb_descriptor = cv::DescriptorExtractor::create("ORB"); //init the descriptor
+     cv::Mat descriptor_set; //set of descriptors, for each feature there is an associated descriptor 
 	
 	//check user args
 	switch(argc)
