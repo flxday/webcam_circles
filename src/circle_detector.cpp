@@ -4,10 +4,16 @@
 #include "highgui.h"
 #include "opencv2/core/core.hpp"
 #include "opencv2/imgproc/imgproc.hpp"
-
+//#include "opencv2/core.hpp"
 //std
 #include <iostream>
 #include <cstdlib>
+
+ using namespace cv;
+ using namespace std;
+
+
+
 
 //constants
 const int GAUSSIAN_BLUR_SIZE = 7;
@@ -19,8 +25,10 @@ const double HOUGH_ACCUM_TH = 70;
 const int MIN_RADIUS = 20;
 const int MAX_RADIUS = 100;
 
-int main(int argc, char *argv[]) 
+int main(int argc, const char *argv[]) 
 {
+
+    Mat src, dst, color_dst;
     cv::VideoCapture camera; //OpenCV video capture object
     cv::Mat image; //OpenCV image object
 	int cam_id; //camera id . Associated to device number in /dev/videoX
@@ -30,7 +38,7 @@ int main(int argc, char *argv[])
     int radius;
     
 
- 	cv::Ptr<cv::ORB> orb_detector = new cv::ORB(10); //ORB point feature detector
+ 	 cv::Ptr<cv::ORB> orb_detector = new cv::ORB(10); //ORB point feature detector
      cv::vector<cv::KeyPoint> point_set; //set of point features
      cv::Ptr<cv::DescriptorExtractor> orb_descriptor; //ORB descriptor
      orb_descriptor = cv::DescriptorExtractor::create("ORB"); //init the descriptor
@@ -52,7 +60,9 @@ int main(int argc, char *argv[])
 	}
 	
 	//advertising to the user 
+
 	std::cout << "Opening video device " << cam_id << std::endl;
+
 
     //open the video stream and make sure it's opened
     if( !camera.open(cam_id) ) 
@@ -78,6 +88,16 @@ int main(int argc, char *argv[])
 
         // If input image is RGB, convert it to gray 
         cv::cvtColor(image, gray_image, CV_BGR2GRAY);
+
+
+        vector<Vec4i> lines;
+        HoughLinesP( image, lines, 1, CV_PI/180, 80, 30, 10 );
+        for( size_t i = 0; i < lines.size(); i++ )
+        {
+        line( gray_image, Point(lines[i][0], lines[i][1]),
+            Point(lines[i][2], lines[i][3]), Scalar(0,0,255), 3, 8 );
+        }
+
 
         //Reduce the noise so we avoid false circle detection
         cv::GaussianBlur( gray_image, gray_image, cv::Size(GAUSSIAN_BLUR_SIZE, GAUSSIAN_BLUR_SIZE), GAUSSIAN_BLUR_SIGMA );
