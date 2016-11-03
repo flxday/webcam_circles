@@ -28,6 +28,7 @@ C++: void HoughCircles(InputArray image, OutputArray circles, int method, double
 C: CvSeq* cvHoughCircles(CvArr* image, void* circle_storage, int method, double dp, double min_dist, double param1=100, double param2=100, int min_radius=0, int max_radius=0 )
 
 Python: cv2.HoughCircles(image, method, dp, minDist[, circles[, param1[, param2[, minRadius[, maxRadius]]]]]) → circles
+    
     Parameters:	
 
         image – 8-bit, single-channel, grayscale input image.
