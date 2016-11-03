@@ -90,15 +90,6 @@ int main(int argc, const char *argv[])
         cv::cvtColor(image, gray_image, CV_BGR2GRAY);
 
 
-        vector<Vec4i> lines;
-        HoughLinesP( image, lines, 1, CV_PI/180, 80, 30, 10 );
-        for( size_t i = 0; i < lines.size(); i++ )
-        {
-        line( gray_image, Point(lines[i][0], lines[i][1]),
-            Point(lines[i][2], lines[i][3]), Scalar(0,0,255), 3, 8 );
-        }
-
-
         //Reduce the noise so we avoid false circle detection
         cv::GaussianBlur( gray_image, gray_image, cv::Size(GAUSSIAN_BLUR_SIZE, GAUSSIAN_BLUR_SIZE), GAUSSIAN_BLUR_SIGMA );
 
